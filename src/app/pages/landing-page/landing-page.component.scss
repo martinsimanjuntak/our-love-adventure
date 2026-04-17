@@ -1,0 +1,238 @@
+.hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: center;
+  min-height: calc(100vh - 180px);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple-deep);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(3rem, 7vw, 5.8rem);
+  line-height: 0.95;
+}
+
+.subtitle {
+  max-width: 680px;
+  margin: 20px 0 0;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-soft);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+}
+
+.button--primary {
+  color: white;
+  background: linear-gradient(135deg, var(--purple), var(--peach-deep));
+  box-shadow: var(--shadow);
+}
+
+.button--ghost {
+  background: rgba(255, 255, 255, 0.7);
+  border: var(--border);
+}
+
+.hero__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.hero__stats article,
+.intro-card,
+.story-card {
+  background: var(--surface);
+  border: var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.hero__stats article {
+  padding: 18px;
+  border-radius: 22px;
+}
+
+.hero__stats strong,
+.hero__stats span {
+  display: block;
+}
+
+.hero__stats strong {
+  font-size: 1.2rem;
+}
+
+.hero__stats span {
+  margin-top: 6px;
+  color: var(--text-soft);
+}
+
+.hero__visual {
+  position: relative;
+  min-height: 480px;
+}
+
+.story-card {
+  position: absolute;
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(14px);
+}
+
+.story-card--main {
+  inset: 70px 10px 20px 40px;
+  padding: 34px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(247, 234, 255, 0.88));
+}
+
+.story-card--main span {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(141, 92, 246, 0.1);
+  color: var(--purple-deep);
+}
+
+.story-card--main strong {
+  display: block;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.story-card--main p {
+  margin-top: 18px;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+.story-card--small,
+.story-card--tiny {
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.story-card--small {
+  top: 0;
+  right: 0;
+  width: 210px;
+  height: 120px;
+  background: linear-gradient(135deg, rgba(255, 179, 159, 0.92), rgba(255, 255, 255, 0.86));
+  transform: rotate(8deg);
+}
+
+.story-card--tiny {
+  left: 0;
+  bottom: 28px;
+  width: 150px;
+  height: 88px;
+  background: linear-gradient(135deg, rgba(141, 92, 246, 0.92), rgba(255, 255, 255, 0.82));
+  color: white;
+  transform: rotate(-10deg);
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 18px 0 24px;
+}
+
+.intro-card {
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  transition: transform 180ms ease;
+}
+
+.intro-card:hover {
+  transform: translateY(-4px);
+}
+
+.intro-card h2 {
+  margin-top: 0;
+}
+
+.intro-card p {
+  margin-bottom: 0;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+.fade-in {
+  animation: fade-in 700ms ease both;
+}
+
+.fade-in--delay {
+  animation-delay: 140ms;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 940px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero__visual {
+    min-height: 380px;
+  }
+
+  .intro-grid,
+  .hero__stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .story-card--main {
+    inset: 54px 0 10px 12px;
+    padding: 24px;
+  }
+
+  .story-card--small {
+    width: 160px;
+    height: 90px;
+  }
+
+  .story-card--tiny {
+    width: 118px;
+    height: 76px;
+  }
+}

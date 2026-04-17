@@ -1,0 +1,27 @@
+<section class="page-head fade-in">
+  <p class="eyebrow">Mode Cerita</p>
+  <h1>Awal muasal hubungan ini</h1>
+</section>
+
+<section class="timeline">
+  @for (section of storySections; track section.id) {
+    <article class="level-card fade-in">
+      <div class="level-card__media" [style.background]="section.accent">
+        <img class="level-card__image" [src]="section.mediaSource" [alt]="section.mediaAlt">
+        <div class="level-card__media-overlay">
+          <span>{{ section.level }}</span>
+          <strong>{{ section.mediaLabel }}</strong>
+          <small>momen awal</small>
+        </div>
+      </div>
+
+      <div class="level-card__content">
+        <p class="level-pill">{{ section.level }}</p>
+        <h2>{{ section.title }}</h2>
+        <p class="level-date">{{ section.date }}</p>
+        <p class="level-description">{{ section.description }}</p>
+        <div class="mood-box">{{ section.mood }}</div>
+      </div>
+    </article>
+  }
+</section>

@@ -1,0 +1,72 @@
+<section class="page-head fade-in">
+  <p class="eyebrow">Galeri</p>
+  <h1>Tiga Tahun, Banyak Cerita, Banyak Kenangan</h1>
+  <p class="page-head__spacer" aria-hidden="true"></p>
+</section>
+
+<audio
+  #backgroundAudio
+  loop
+  preload="auto"
+  (error)="handleAudioError()"
+>
+  <source [src]="activeTrack" type="audio/mpeg">
+</audio>
+
+<section class="gallery-scroll fade-in">
+  <div class="gallery-column gallery-column--down">
+    <div class="gallery-column__track">
+      @for (item of firstColumn; track item.id) {
+        <article class="memory-card">
+          <img [src]="item.source" [alt]="item.title">
+        </article>
+      }
+      @for (item of firstColumn; track item.id + '-clone' ) {
+        <article class="memory-card is-clone" aria-hidden="true">
+          <img [src]="item.source" [alt]="item.title">
+        </article>
+      }
+    </div>
+  </div>
+
+  <div class="gallery-column gallery-column--up">
+    <div class="gallery-column__track">
+      @for (item of secondColumn; track item.id) {
+        <article class="memory-card">
+          <img [src]="item.source" [alt]="item.title">
+        </article>
+      }
+      @for (item of secondColumn; track item.id + '-clone' ) {
+        <article class="memory-card is-clone" aria-hidden="true">
+          <img [src]="item.source" [alt]="item.title">
+        </article>
+      }
+    </div>
+  </div>
+
+  <div class="gallery-column gallery-column--down gallery-column--slow">
+    <div class="gallery-column__track">
+      @for (item of thirdColumn; track item.id) {
+        <article class="memory-card">
+          <img [src]="item.source" [alt]="item.title">
+        </article>
+      }
+      @for (item of thirdColumn; track item.id + '-clone' ) {
+        <article class="memory-card is-clone" aria-hidden="true">
+          <img [src]="item.source" [alt]="item.title">
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<button
+  class="music-disc"
+  type="button"
+  [disabled]="!musicReady()"
+  [class.is-playing]="isMusicPlaying()"
+  (click)="toggleMusic()"
+  [attr.aria-label]="isMusicPlaying() ? 'Stop musik' : 'Putar musik'"
+>
+  <span class="music-disc__inner"></span>
+</button>

@@ -1,0 +1,43 @@
+.memory-card {
+  padding: 28px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 240, 235, 0.95));
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--purple-deep);
+}
+
+h3 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+}
+
+.memory-text {
+  min-height: 52px;
+  margin: 18px 0 20px;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: white;
+  background: linear-gradient(135deg, var(--purple), var(--peach-deep));
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(141, 92, 246, 0.2);
+}

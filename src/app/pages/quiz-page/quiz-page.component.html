@@ -1,0 +1,72 @@
+<section class="page-head fade-in">
+  <p class="eyebrow">Mode Seru / Quiz</p>
+  <h1>Seberapa paham kamu sama cerita kita?</h1>
+  <p>Coba jawab 5 pertanyaan ini. Kalau semuanya bener, ada ucapan spesial buat kamu.</p>
+</section>
+
+<section class="quiz-status fade-in">
+  <div>
+    <strong>{{ correctCount() }} / {{ questions.length }}</strong>
+    <span>jawaban bener</span>
+  </div>
+  <div>
+    <strong>{{ answeredCount() }} / {{ questions.length }}</strong>
+    <span>pertanyaan terjawab</span>
+  </div>
+  <button type="button" (click)="resetQuiz()">Ulang Quiz</button>
+</section>
+
+<section class="quiz-list">
+  @for (question of questions; track question.id) {
+    <article class="quiz-card fade-in">
+      <p class="quiz-number">Pertanyaan {{ $index + 1 }}</p>
+      <h2>{{ question.question }}</h2>
+      <div class="option-list">
+        @for (option of question.options; track option.text) {
+          <button
+            type="button"
+            [class.is-selected]="selectedAnswers()[question.id]?.text === option.text"
+            [class.is-correct]="selectedAnswers()[question.id]?.text === option.text && option.isCorrect"
+            [class.is-wrong]="selectedAnswers()[question.id]?.text === option.text && !option.isCorrect"
+            (click)="chooseAnswer(question.id, option)"
+          >
+            {{ option.text }}
+          </button>
+        }
+      </div>
+      @if (selectedAnswers()[question.id]; as answer) {
+        <p class="feedback">{{ answer.feedback }}</p>
+      }
+    </article>
+  }
+</section>
+
+@if (passed()) {
+  <div class="pass-popup-backdrop fade-in">
+    <section class="pass-popup">
+      <div class="pass-popup__glow pass-popup__glow--left"></div>
+      <div class="pass-popup__glow pass-popup__glow--right"></div>
+      <div class="confetti confetti--1"></div>
+      <div class="confetti confetti--2"></div>
+      <div class="confetti confetti--3"></div>
+      <div class="confetti confetti--4"></div>
+      <div class="confetti confetti--5"></div>
+      <div class="confetti confetti--6"></div>
+      <div class="confetti confetti--7"></div>
+      <div class="confetti confetti--8"></div>
+      <div class="confetti confetti--9"></div>
+      <div class="confetti confetti--10"></div>
+      <div class="confetti confetti--11"></div>
+      <div class="confetti confetti--12"></div>
+      <div class="confetti confetti--13"></div>
+      <div class="confetti confetti--14"></div>
+      <div class="confetti confetti--15"></div>
+      <div class="confetti confetti--16"></div>
+      <h2>Selamat, kamu lulus untuk hubungan ini 💜</h2>
+      <p>Semua jawaban kamu bener. Valid banget, berarti kamu emang paham cerita kita.</p>
+      <div class="pass-popup__actions">
+        <button type="button" (click)="resetQuiz()">Main Lagi</button>
+      </div>
+    </section>
+  </div>
+}
