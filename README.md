@@ -89,6 +89,131 @@ docker compose down
 - `nginx/default.conf` → config Nginx untuk Angular SPA routing
 - `.dockerignore` → mengurangi file yang ikut ke Docker build context
 
+## Deploy ke VPS Dengan Docker
+
+Requirement deploy yang sudah disiapkan:
+
+- aplikasi jalan lewat Docker
+- port host default pakai `4300`, jadi tidak bentrok dengan aplikasi lain yang sudah jalan di `4200`
+- siap dipasang di belakang reverse proxy domain `www.mcozy.my.id`
+- target VPS: `188.166.206.86`
+
+### 1. Push Project ke Repository
+
+Pastikan file berikut ikut ke repo:
+
+- `Dockerfile`
+- `docker-compose.yml`
+- `nginx/default.conf`
+- `deploy/nginx/our-love-adventure.conf`
+- source code project
+- `public/`
+
+### 2. Arahkan Domain ke VPS
+
+Di DNS provider Anda, buat record:
+
+- `A` → `@` → `188.166.206.86`
+- `A` → `www` → `188.166.206.86`
+
+Kalau hanya ingin pakai `www.mcozy.my.id`, minimal record `www` harus mengarah ke IP VPS di atas.
+
+### 3. Pull Project di VPS
+
+```bash
+git clone <repo-anda>
+cd our-love-adventure
+cp .env.example .env
+```
+
+### 4. Jalankan Container App
+
+```bash
+docker compose up -d --build
+```
+
+App akan jalan di VPS pada:
+
+```text
+http://127.0.0.1:4300
+```
+
+Atau dari luar server jika firewall mengizinkan:
+
+```text
+http://188.166.206.86:4300
+```
+
+### 5. Pasang Reverse Proxy Nginx di VPS
+
+Kalau Nginx di VPS sudah ada dan dipakai untuk banyak aplikasi, pakai config ini:
+
+File template sudah saya siapkan di:
+
+```text
+deploy/nginx/our-love-adventure.conf
+```
+
+Isi pentingnya:
+
+```nginx
+server {
+  listen 80;
+  server_name www.mcozy.my.id mcozy.my.id;
+
+  location / {
+    proxy_pass http://127.0.0.1:4300;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+}
+```
+
+Contoh langkah di Ubuntu/Debian:
+
+```bash
+sudo cp deploy/nginx/our-love-adventure.conf /etc/nginx/sites-available/our-love-adventure.conf
+sudo ln -s /etc/nginx/sites-available/our-love-adventure.conf /etc/nginx/sites-enabled/our-love-adventure.conf
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+### 6. Pasang SSL
+
+Kalau domain sudah mengarah ke VPS dan Nginx sudah aktif:
+
+```bash
+sudo certbot --nginx -d www.mcozy.my.id -d mcozy.my.id
+```
+
+### 7. Update Deploy Berikutnya
+
+Kalau nanti ada update:
+
+```bash
+git pull
+docker compose up -d --build
+```
+
+### Catatan Penting
+
+- jangan publish app ini ke port `4200`, karena di server Anda port itu sudah dipakai
+- default project ini sudah aman di `4300`
+- kalau `4300` ternyata juga terpakai, ubah `.env`:
+
+```bash
+APP_PORT=4301
+```
+
+Lalu sesuaikan juga `proxy_pass` di config Nginx VPS jadi:
+
+```nginx
+proxy_pass http://127.0.0.1:4301;
+```
+
 ## Build Production
 
 ```bash
