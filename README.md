@@ -44,6 +44,51 @@ Setelah server jalan, buka:
 http://localhost:4200
 ```
 
+## Menjalankan Dengan Docker
+
+Project ini sudah disiapkan untuk dijalankan dengan Docker dan `docker compose`.
+
+Port default yang dipakai di host adalah `4300`, supaya tidak bentrok dengan aplikasi Angular lain yang mungkin sudah jalan di VPS.
+
+### Build dan Jalankan
+
+```bash
+docker compose up -d --build
+```
+
+Setelah container jalan, buka:
+
+```text
+http://localhost:4300
+```
+
+### Ganti Port Kalau Diperlukan
+
+Kalau di VPS port `4300` ternyata sudah terpakai juga, jalankan dengan env variable:
+
+```bash
+APP_PORT=4301 docker compose up -d --build
+```
+
+Contoh di atas akan menjalankan aplikasi di:
+
+```text
+http://localhost:4301
+```
+
+### Stop Container
+
+```bash
+docker compose down
+```
+
+### File Docker
+
+- `Dockerfile` → build Angular lalu serve hasil build pakai Nginx
+- `docker-compose.yml` → jalankan container dengan port host non-default
+- `nginx/default.conf` → config Nginx untuk Angular SPA routing
+- `.dockerignore` → mengurangi file yang ikut ke Docker build context
+
 ## Build Production
 
 ```bash
@@ -114,4 +159,10 @@ Build terakhir berhasil dengan:
 
 ```bash
 npm run build
+```
+
+Deploy Docker juga bisa dijalankan dengan:
+
+```bash
+docker compose up -d --build
 ```

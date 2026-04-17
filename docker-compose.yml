@@ -1,0 +1,9 @@
+services:
+  our-love-adventure:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: our-love-adventure
+    ports:
+      - "${APP_PORT:-4300}:80"
+    restart: unless-stopped
